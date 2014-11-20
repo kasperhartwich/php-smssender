@@ -1,0 +1,20 @@
+{
+    "name": "kasperhartwich/php-smssender",
+    "type": "library",
+    "description": "This is my take on a sms sender interface, that in time should support a lot of different sms gateways.",
+    "keywords": ["sms", "smssender", "cpsms", "compaya", "smsgateway", "smsgateway.dk"],
+    "homepage": "https://github.com/kasperhartwich/php-smssender",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kasper Hartwich",
+            "email": "kasperhartwich@gmail.com"
+        }
+    ],
+   "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "classmap": ["lib/"]
+    }
+}
