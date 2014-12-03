@@ -62,7 +62,7 @@ class SMSSender
             throw new Exception('There were a problem with sending the sms.');
         }
         if (stristr($this->response, 'succes')) {
-            return return;
+            return true;
         }
         return false;
     }
