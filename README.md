@@ -7,6 +7,7 @@ These are at the moment supported:
 - CPSMS
 - SMSgateway.dk
 - SureSMS.com
+- Inmobile.dk
 
 
 Example
