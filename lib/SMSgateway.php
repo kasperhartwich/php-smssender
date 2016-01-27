@@ -1,6 +1,6 @@
 <?php
 /*
- * SMSgateway.sk / Compaz A/S
+ * SMSgateway.dk / Compaz A/S
  * https://www.smsgateway.dk
  */
 
