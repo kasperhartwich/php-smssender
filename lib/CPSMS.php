@@ -17,7 +17,6 @@ class CPSMS extends SMSSender
         'url' => 'callback_url',
         'message' => 'message',
         'utf8' => 1,
-        'id' => 'id',
     );
 
     public function __construct($username, $password, $log_file = false)
@@ -50,7 +49,7 @@ class CPSMS extends SMSSender
 
         return array(
             'id' => array_key_exists('id', $raw_response) ? $raw_response['id'] : null,
-            'recipient' => $raw_response['to'],
+            'recipient' => $raw_response['receiver'],
             'status' => $status,
             'received_at' => time(),
             'raw' => $raw_response,
