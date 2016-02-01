@@ -37,6 +37,39 @@ class SMSgateway extends SMSSender
         return $value ? 1 : 0;
     }
 
+    public static function callback($raw_response)
+    {
+        $returndata = array_key_exists('returndata', $raw_response) ? explode(':', $raw_response['returndata']) : null;
+        switch($raw_response['status']) { //Status
+            case 'sent':
+                $status = self::STATUS_SENT;
+                break;
+            case 'received':
+                $status = self::STATUS_RECEIVED;
+                break;
+            case 'rejected':
+                $status = self::STATUS_REJECTED;
+                break;
+            case 'queued':
+                $status = self::STATUS_QUEUED;
+                break;
+            case 'error':
+                $status = self::STATUS_ERROR;
+                break;
+            case 'buffered':
+            default:
+                $status = self::STATUS_UNKNOWN;
+        }
+
+        return array(
+            'id' => $returndata ? $returndata[1] : null,
+            'recipient' => $raw_response['to'],
+            'status' => $status,
+            'received_at' => $raw_response['receivetime'],
+            'raw' => $raw_response,
+        );
+    }
+
     public function translateResponse() {
         $xml = new SimpleXMLElement($this->response);
         if($xml->succes) {
