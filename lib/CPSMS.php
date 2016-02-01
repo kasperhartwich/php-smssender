@@ -8,7 +8,7 @@ require __DIR__ . '/SMSSender.php';
 
 class CPSMS extends SMSSender
 {
-    public $url = 'http://www.cpsms.dk/sms/';
+    public $api_url = 'http://www.cpsms.dk/sms/';
     public $schema = array(
         'username' => 'username',
         'password' => 'password',
@@ -17,13 +17,16 @@ class CPSMS extends SMSSender
         'url' => 'callback_url',
         'message' => 'message',
         'utf8' => 1,
-        'id' => null,
+        'id' => 'id',
     );
 
     public function __construct($username, $password, $log_file = false)
     {
-        $this->callback_url = null;
         parent::__construct($username, $password, $log_file);
+    }
+
+    public function setRecipient($value) {
+        return strlen($value)==8 ? '+45' . $value : $value;
     }
 
     public static function callback($raw_response)
@@ -46,7 +49,7 @@ class CPSMS extends SMSSender
         }
 
         return array(
-            'id' => array_key_exists('id', $raw_response) ? $returndata['id'] : null,
+            'id' => array_key_exists('id', $raw_response) ? $raw_response['id'] : null,
             'recipient' => $raw_response['to'],
             'status' => $status,
             'received_at' => time(),

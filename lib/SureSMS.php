@@ -8,7 +8,7 @@ require __DIR__ . '/SMSSender.php';
 
 class SureSMS extends SMSSender
 {
-    public $url = 'https://suresms.com/Script/GlobalSendSMS.aspx';
+    public $api_url = 'https://suresms.com/Script/GlobalSendSMS.aspx';
     public $schema = array(
         'login' => 'username',
         'password' => 'password',

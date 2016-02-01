@@ -8,7 +8,7 @@ require __DIR__ . '/SMSSender.php';
 
 class Inmobile extends SMSSender
 {
-    public $url = 'https://mm.inmobile.dk/Api/V2/Get/SendMessages';
+    public $api_url = 'https://mm.inmobile.dk/Api/V2/Get/SendMessages';
     public $schema = array(
         'apikey' => 'apikey',
         'recipients' => 'recipient',

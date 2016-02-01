@@ -8,7 +8,7 @@ require __DIR__ . '/SMSSender.php';
 
 class SMSgateway extends SMSSender
 {
-    public $url = 'http://smschannel1.dk/sendsms/'; // alternative: http://smschannel2.dk/sendsms/
+    public $api_url = 'http://smschannel1.dk/sendsms/'; // alternative: http://smschannel2.dk/sendsms/
     public $schema = array(
         'username' => 'username',
         'password' => 'password',

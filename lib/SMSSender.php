@@ -14,14 +14,20 @@ class SMSSender
     const STATUS_UNKNOWN = 'unknown';
 
     public $log_file;
-    public $url = null;
+    public $api_url = null;
     public $schema = array();
     public $request;
     public $response;
     public $replaces = array( //Illegal characters
         "/贸/" => "o"
-     );
+    );
 
+    /**
+     * SMSSender constructor. Set up username and password.
+     * @param $username
+     * @param $password
+     * @param bool|false $log_file
+     */
     public function __construct($username, $password, $log_file = false)
     {
         $this->__set('username', $username);
@@ -29,6 +35,12 @@ class SMSSender
         $this->log_file = $log_file;
     }
 
+    /**
+     * Custom setter
+     * @param $key
+     * @param $value
+     * @throws Exception
+     */
     public function __set($key, $value)
     {
         if ($key=='message') {$value = preg_replace(array_keys($this->replaces), array_values($this->replaces), $value);}
@@ -46,6 +58,10 @@ class SMSSender
         $this->schema[$provider_key] = $value;
     }
 
+    /**
+     * Log function
+     * @param $message
+     */
     public function log($message)
     {
         if ($this->log_file) {
@@ -54,11 +70,16 @@ class SMSSender
         }
     }
 
+    /**
+     * Send SMS / SMs dispatcher
+     * @return bool
+     * @throws Exception
+     */
     public function send()
     {
         $context = stream_context_create(array('http' => array('header' => "Accept-Charset: UTF-8;")));
-        $this->request = $this->url . '?' . http_build_query($this->schema);
- 
+        $this->request = $this->api_url . '?' . http_build_query($this->schema);
+
         $this->response = file_get_contents($this->request, FALSE, $context);
 
         $this->log("Sms dispatched: " . print_r($this->request, true) . " / "  . print_r($this->response, true));
@@ -66,11 +87,21 @@ class SMSSender
         return $this->translateResponse();
     }
 
-    public static function callback($raw_response)
+    /**
+     * Callback function, used to translate a callback response-
+     * @param $get_request
+     * @throws Exception
+     */
+    public static function callback($get_request)
     {
         throw new Exception('Callback not supported or implemented for gateway.');
     }
 
+    /**
+     * Translate the response from the smsgateway.
+     * @return bool
+     * @throws Exception
+     */
     public function translateResponse()
     {
         if (empty($this->response)) {
@@ -81,5 +112,5 @@ class SMSSender
         }
         return false;
     }
- 
+
 }
